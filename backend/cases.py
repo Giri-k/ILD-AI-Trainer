@@ -479,6 +479,277 @@ ILD_CASES = [
             "HP vs IPF": "HP has upper/mid zone predominance vs basal in IPF. Ground-glass and air trapping in HP vs honeycombing in IPF. HP has identifiable antigen exposure.",
             "HP vs COP": "COP shows consolidation in peripheral distribution. HP has centrilobular nodules and exposure history."
         }
+    },
+    {
+        "id": "ild_004",
+        "title": "Progressive Dyspnea and Joint Stiffness in a 62-Year-Old Woman",
+        "difficulty": "hard",
+        "initial_presentation": (
+            "A 62-year-old woman is referred for ILD evaluation after 18 months of progressive "
+            "exertional dyspnea and dry cough. An HRCT ordered by her primary care physician "
+            "showed a fibrotic pattern. She also reports 2 years of worsening joint pain and "
+            "morning stiffness."
+        ),
+        "full_case_details": {
+            "demographics": "62-year-old Caucasian female, retired office worker, BMI 25",
+            "chief_complaint": "Progressive exertional dyspnea and dry cough for 18 months",
+            "hpi": (
+                "Patient first noticed breathlessness with moderate exertion 18 months ago. "
+                "Dyspnea has progressed steadily; she is now short of breath walking half a block "
+            "or climbing a single flight of stairs. She has a persistent dry cough without "
+            "hemoptysis, fevers, or night sweats. Over the past 2 years she has developed "
+            "bilateral hand and wrist pain with prominent morning stiffness lasting 1–2 hours "
+            "daily. She has noticed swelling of her MCP and PIP joints. She reports a small "
+            "firm nodule on her right elbow that appeared about a year ago. No Raynaud phenomenon, "
+            "skin thickening, muscle weakness, oral ulcers, or rashes. Mild heartburn controlled "
+            "with antacids. No significant weight loss."
+        ),
+        "past_medical_history": [
+            "Hypertension – controlled on amlodipine 5mg daily",
+            "Osteoporosis – on calcium and vitamin D supplementation",
+            "GERD – occasional antacid use",
+            "No prior lung disease diagnosed",
+            "No prior rheumatologic diagnosis"
+        ],
+        "medications": [
+            "Amlodipine 5mg daily",
+            "Calcium 600mg with vitamin D 400 IU daily",
+            "Antacid PRN",
+            "Acetaminophen PRN for joint pain"
+        ],
+        "family_history": (
+            "Mother had rheumatoid arthritis. Sister has hypothyroidism. "
+            "No family history of lung disease or pulmonary fibrosis."
+        ),
+        "social_history": (
+            "Never smoker. Retired office administrator, no occupational dust, chemical, "
+            "or asbestos exposure. No birds, mold exposure, hot tub use, or farming. "
+            "Lives in a suburban home with her husband. No pets. Drinks alcohol rarely. "
+            "No illicit drug use or vaping."
+        ),
+        "review_of_systems": {
+            "constitutional": "Mild fatigue, no fevers, night sweats, or significant weight loss",
+            "respiratory": "Progressive exertional dyspnea, dry cough, no wheezing or hemoptysis",
+            "cardiovascular": "No chest pain, palpitations, or lower extremity edema",
+            "musculoskeletal": (
+                "Bilateral MCP and PIP joint pain and swelling for 2 years, "
+                "morning stiffness lasting 1–2 hours, firm nodule on right elbow"
+            ),
+            "skin": "No rashes, no Raynaud phenomenon, no skin thickening",
+            "eyes": "No dryness, redness, or vision changes",
+            "gi": "Mild heartburn, no dysphagia or regurgitation"
+        },
+        "physical_exam": {
+            "vitals": "BP 132/78, HR 82, RR 18, SpO2 94% on room air, Temp 98.2°F",
+            "general": "Well-appearing, no acute distress at rest, mild dyspnea with prolonged speech",
+            "lungs": "Bilateral fine inspiratory crackles (Velcro crackles) at lung bases, no wheezing",
+            "heart": "Regular rate and rhythm, P2 not accentuated, no murmurs or gallops",
+            "extremities": (
+                "Bilateral MCP and PIP joint swelling with warmth and tenderness (synovitis), "
+                "no ulnar deviation. Mild digital clubbing. No lower extremity edema."
+            ),
+            "skin": (
+                "A firm, nontender, 1.5 cm subcutaneous nodule on the extensor surface of "
+                "the right elbow consistent with a rheumatoid nodule. No rashes, no nailfold "
+                "capillary changes."
+            ),
+            "musculoskeletal": (
+                "Symmetric swelling and tenderness of MCP and PIP joints bilaterally. "
+                "Wrists mildly tender with reduced range of motion. Grip strength reduced bilaterally."
+            )
+        },
+        "test_results": {
+            "CBC": "WBC 7.8, Hgb 12.4, Hct 37.2, Platelets 310. Normal differential.",
+            "CMP": "Na 141, K 4.0, Cl 103, CO2 25, BUN 16, Cr 0.9, Glucose 98, Albumin 3.6, AST 22, ALT 18. Normal.",
+            "ESR": "38 mm/hr (elevated)",
+            "CRP": "1.8 mg/dL (mildly elevated)",
+            "RF": "86 IU/mL (elevated, normal <14)",
+            "Anti-CCP": "Strongly positive (>250 U/mL)",
+            "ANA": "Positive at 1:160, homogeneous pattern",
+            "ENA panel": "Negative (anti-Ro, anti-La, anti-Sm, anti-RNP, anti-Scl-70, anti-Jo-1 all negative)",
+            "ANCA": "Negative",
+            "BNP": "65 pg/mL (normal)",
+            "Pulmonary Function Tests": (
+                "FVC 68% predicted, FEV1 72% predicted, FEV1/FVC ratio 0.83 (normal). "
+                "TLC 70% predicted. DLCO 45% predicted. Restrictive pattern with severely "
+                "reduced diffusion capacity."
+            ),
+            "Chest X-ray": (
+                "Bilateral basilar reticular opacities. Reduced lung volumes. "
+                "No pleural effusions or masses."
+            ),
+            "HRCT Chest": (
+                "Basal-predominant, subpleural reticulation with traction bronchiectasis. "
+                "No definite honeycombing. Minimal ground-glass opacities. Pattern consistent "
+                "with probable UIP. Coexistent mild cylindrical bronchiectasis in the lower lobes. "
+                "No mediastinal lymphadenopathy. No mosaic attenuation or air trapping."
+            ),
+            "6-Minute Walk Test": (
+                "Distance 310m (reduced). SpO2 dropped from 94% to 86% during exercise. "
+                "Significant exertional desaturation requiring supplemental oxygen titration."
+            ),
+            "ABG": "pH 7.43, PaCO2 38, PaO2 72, HCO3 25 on room air",
+            "Echocardiogram": (
+                "Normal LV function, EF 60%. Estimated RVSP 32 mmHg (normal). "
+                "No significant valvular disease. No pericardial effusion."
+            ),
+            "Bronchoalveolar Lavage": (
+                "Not performed. Multidisciplinary discussion determined that the clinical, "
+                "serologic, and radiographic picture was sufficiently diagnostic. "
+                "BAL/biopsy reserved for cases with diagnostic uncertainty."
+            ),
+            "Surgical Lung Biopsy": "Not performed – clinical diagnosis established via MDD without biopsy."
+        }
+        },
+        "ground_truth_diagnosis": "Rheumatoid Arthritis–Associated Interstitial Lung Disease (RA-ILD), Probable UIP Pattern",
+        "ideal_diagnostic_pathway": [
+        {
+            "step": 1,
+            "action": "history",
+            "ideal_questions": [
+                "Triage: red flags – resting hypoxemia, rapid progression over weeks, fever, hemoptysis, chest pain, syncope, massive desaturation on minimal exertion",
+                "Onset, rate of progression, and trajectory of dyspnea (months vs weeks) and functional decline",
+                "Cough characteristics – productive vs dry, hemoptysis",
+                "Inhalational/environmental exposures – birds, mold, water damage, humidifiers, hot tubs, farming, wood dust, metal dust, silica, asbestos, vaping/smoking",
+                "Drug/treatment exposures – amiodarone, nitrofurantoin, methotrexate, leflunomide, checkpoint inhibitors, bleomycin, radiation",
+                "Autoimmune/CTD clues – morning stiffness duration, symmetric small-joint pain/swelling, rheumatoid nodules, sicca symptoms, Raynaud, skin thickening, myositis symptoms, inflammatory back pain, oral ulcers",
+                "Reflux/aspiration – heartburn, regurgitation, nocturnal cough, dysphagia, OSA",
+                "Family history of autoimmune or lung disease"
+            ],
+            "reasoning": (
+                "Structured ILD history must systematically cover exposures, drugs, CTD clues, "
+                "reflux/aspiration, and trajectory. In this patient, the combination of 2-year "
+                "symmetric small-joint symptoms with prolonged morning stiffness and a subcutaneous "
+                "nodule immediately raises suspicion for rheumatoid arthritis as the underlying "
+                "cause of the ILD. Absence of inhalational exposures and culprit medications helps "
+                "narrow the differential."
+            )
+        },
+        {
+            "step": 2,
+            "action": "physical_exam",
+            "ideal_questions": [
+                "Lung auscultation – basilar dry crackles (Velcro crackles)",
+                "Digital clubbing",
+                "Joint exam – synovitis of MCP/PIP joints, ulnar deviation",
+                "Rheumatoid nodules on extensor surfaces",
+                "Skin and nailfold changes suggesting CTD overlap (Raynaud, sclerodactyly, nailfold capillary changes)",
+                "Signs of pulmonary hypertension – loud P2, lower extremity edema, elevated JVP"
+            ],
+            "reasoning": (
+                "Basilar Velcro crackles confirm ILD on exam. Synovitis of MCP/PIP joints "
+                "and a rheumatoid nodule on the elbow are key findings pointing toward RA-ILD. "
+                "Absence of skin thickening, nailfold changes, and Raynaud argues against "
+                "scleroderma-associated ILD. Assessment for pulmonary hypertension signs is "
+                "critical for prognosis."
+            )
+        },
+        {
+            "step": 3,
+            "action": "test",
+            "ideal_tests": [
+                "Pulmonary Function Tests",
+                "6-Minute Walk Test",
+                "HRCT Chest"
+            ],
+            "reasoning": (
+                "PFTs quantify severity: restrictive defect (FVC 68%) with severely reduced "
+                "DLCO (45%) indicates significant parenchymal and gas-exchange impairment. "
+                "6MWT documents functional capacity and exertional desaturation (94% → 86%), "
+                "informing oxygen titration needs. HRCT is the cornerstone: probable UIP pattern "
+                "(basal subpleural reticulation + traction bronchiectasis without honeycombing) "
+                "with coexistent airway disease supports RA-ILD over IPF."
+            )
+        },
+        {
+            "step": 4,
+            "action": "test",
+            "ideal_tests": [
+                "CBC",
+                "CMP",
+                "ESR",
+                "CRP",
+                "RF",
+                "Anti-CCP",
+                "ANA",
+                "ENA panel",
+                "ANCA"
+            ],
+            "reasoning": (
+                "Autoimmune serologies are essential to identify the underlying cause of ILD. "
+                "Strongly positive anti-CCP (high specificity for RA) and elevated RF confirm "
+                "seropositive RA. ANA with negative ENA panel makes other CTDs (SLE, scleroderma, "
+                "myositis) unlikely. Negative ANCA excludes vasculitis. ESR/CRP elevation reflects "
+                "systemic inflammation."
+            )
+        },
+        {
+            "step": 5,
+            "action": "test",
+            "ideal_tests": [
+                "Echocardiogram",
+                "BNP",
+                "ABG"
+            ],
+            "reasoning": (
+                "Echocardiogram screens for pulmonary hypertension, a complication of chronic "
+                "ILD that worsens prognosis. BNP helps when dyspnea is out of proportion to "
+                "ILD severity. ABG quantifies baseline gas exchange impairment. In this case, "
+                "RVSP is normal and BNP is reassuring, but these become important for serial monitoring."
+            )
+        },
+        {
+            "step": 6,
+            "action": "diagnosis",
+            "reasoning": (
+                "Multidisciplinary discussion (MDD) integrating pulmonology, radiology, and "
+                "rheumatology confirms the diagnosis. Strongly positive anti-CCP + elevated RF + "
+                "symmetric inflammatory polyarthritis with morning stiffness >45 minutes + "
+                "rheumatoid nodules fulfills ACR/EULAR criteria for RA. HRCT probable UIP pattern "
+                "with coexistent airway disease in the setting of confirmed RA = RA-ILD. "
+                "No competing etiology identified (no exposures, no culprit drugs, negative ANCA, "
+                "negative ENA). BAL/surgical biopsy not required given high diagnostic confidence "
+                "from clinical, serologic, and radiographic concordance. "
+                "Next steps: rheumatology co-management for systemic RA treatment, baseline "
+                "severity trending (PFTs every 3–6 months, DLCO/FVC trajectory), oxygen titration, "
+                "PH screening, GERD management, and shared decision-making on antifibrotic therapy "
+                "if progressive fibrotic phenotype criteria are met."
+            )
+        }
+    ],
+    "differential_diagnoses": [
+        "Rheumatoid Arthritis–Associated ILD (RA-ILD)",
+        "Idiopathic Pulmonary Fibrosis (IPF)",
+        "Other Connective Tissue Disease–Associated ILD (CTD-ILD, e.g., scleroderma, myositis)",
+        "Chronic Hypersensitivity Pneumonitis",
+        "Drug-induced ILD"
+    ],
+    "key_distinguishing_features": {
+        "RA-ILD vs IPF": (
+            "Both can present with UIP pattern on HRCT. RA-ILD is distinguished by the "
+            "presence of seropositive inflammatory arthritis (strongly positive anti-CCP, "
+            "elevated RF, synovitis, rheumatoid nodules) and coexistent airway disease "
+            "(bronchiectasis). IPF is a diagnosis of exclusion requiring absence of a known "
+            "cause for UIP."
+        ),
+        "RA-ILD vs Other CTD-ILD": (
+            "Negative ENA panel (anti-Ro, anti-La, anti-Scl-70, anti-Jo-1, anti-RNP) "
+            "and absence of scleroderma features (Raynaud, skin thickening, nailfold changes) "
+            "or myositis features (proximal weakness, elevated CK) argues against other CTDs. "
+            "The joint pattern (symmetric MCP/PIP synovitis) and anti-CCP positivity are "
+            "specific for RA."
+        ),
+        "RA-ILD vs Chronic HP": (
+            "No identifiable antigen exposure (no birds, mold, hot tubs). HRCT shows basal "
+            "predominance without air trapping or centrilobular nodules, favoring UIP/RA-ILD "
+            "over HP. HP typically shows mid-to-upper zone predominance with mosaic attenuation."
+        ),
+            "RA-ILD vs Drug-induced ILD": (
+            "No exposure to known ILD-causing drugs (amiodarone, nitrofurantoin, methotrexate, "
+            "bleomycin, checkpoint inhibitors). Current medications (amlodipine, calcium/vitamin D) "
+            "are not associated with pulmonary toxicity."
+            )
+        }
     }
 ]
 
