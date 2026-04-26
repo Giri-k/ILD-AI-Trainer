@@ -160,6 +160,7 @@ export default function ChatInterface({ session, onDiagnosisComplete }) {
                     src={`${process.env.REACT_APP_API_URL || "http://localhost:8000"}${imgUrl}`}
                     alt={`HRCT scan ${imgIdx + 1}`}
                     className="message-image"
+                    style={{maxWidth: "666px", width: "100%", borderRadius: "10px", cursor: "pointer"}}
                     onClick={(e) => {
                       // Open image in new tab on click
                       window.open(e.target.src, '_blank');
