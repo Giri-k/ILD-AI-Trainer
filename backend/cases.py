@@ -5,6 +5,8 @@ ideal diagnostic pathway, test costs, and expected findings.
 """
 
 from typing import Optional
+from pathlib import Path
+import glob
 
 ILD_CASES = [
     {
@@ -824,9 +826,53 @@ def get_test_cost(test_name: str) -> float:
     return 200.0
 
 
+def get_hrct_images_for_case(case_id: str) -> list[str]:
+    """
+    Automatically discover HRCT images for a case based on naming convention.
+    
+    Convention: Place images in backend/images/ with naming pattern:
+    - {case_id}_hrct_*.png (e.g., ild_004_hrct_axial_1.png)
+    - OR {case_id}_*.png (e.g., ild_004_axial_1.png)
+    
+    Returns list of image paths relative to backend directory.
+    """
+    images_dir = Path(__file__).parent / "images"
+    if not images_dir.exists():
+        return []
+    
+    # Try both naming patterns
+    patterns = [
+        f"{case_id}_hrct_*.png",
+        f"{case_id}_hrct_*.jpg",
+        f"{case_id}_*.png",
+        f"{case_id}_*.jpg"
+    ]
+    
+    found_images = []
+    for pattern in patterns:
+        matches = glob.glob(str(images_dir / pattern))
+        found_images.extend(matches)
+    
+    # Remove duplicates and sort
+    found_images = sorted(list(set(found_images)))
+    
+    # Convert to relative paths from backend directory
+    relative_paths = []
+    for img_path in found_images:
+        # Just use the filename since we know they're in backend/images/
+        filename = Path(img_path).name
+        relative_paths.append(f"images/{filename}")
+    
+    return relative_paths
+
+
 def get_case_by_id(case_id: str) -> Optional[dict]:
     for case in ILD_CASES:
         if case["id"] == case_id:
+            # Automatically add HRCT images if they exist
+            hrct_images = get_hrct_images_for_case(case_id)
+            if hrct_images:
+                case["full_case_details"]["hrct_images"] = hrct_images
             return case
     return None
 
