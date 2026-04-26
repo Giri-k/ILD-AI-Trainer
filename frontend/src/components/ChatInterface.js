@@ -52,7 +52,12 @@ export default function ChatInterface({ session, onDiagnosisComplete }) {
       } else if (mode === "test") {
         const res = await orderTest(session.session_id, text);
         addMessage(res.order_message);
-        addMessage(res.result_message);
+        // Add images to the result message if present
+        const resultMsg = { ...res.result_message };
+        if (res.images && res.images.length > 0) {
+          resultMsg.images = res.images;
+        }
+        addMessage(resultMsg);
         setTotalCost(res.total_cost);
         setTestsOrdered(res.tests_ordered);
       }
@@ -146,6 +151,25 @@ export default function ChatInterface({ session, onDiagnosisComplete }) {
               </div>
             );
           })}
+          {/* Render images if present */}
+          {msg.images && msg.images.length > 0 && (
+            <div className="message-images">
+              {msg.images.map((imgUrl, imgIdx) => (
+                <div key={imgIdx} className="message-image-container">
+                  <img
+                    src={`${process.env.REACT_APP_API_URL || "http://localhost:8000"}${imgUrl}`}
+                    alt={`HRCT scan ${imgIdx + 1}`}
+                    className="message-image"
+                    style={{maxWidth: "666px", width: "100%", borderRadius: "10px", cursor: "pointer"}}
+                    onClick={(e) => {
+                      // Open image in new tab on click
+                      window.open(e.target.src, '_blank');
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     );

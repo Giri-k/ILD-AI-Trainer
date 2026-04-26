@@ -6,11 +6,14 @@ from __future__ import annotations
 
 import uuid
 import json
+from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from models import (
     StartSessionRequest, AskQuestionRequest, OrderTestRequest,
@@ -32,6 +35,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Mount static files for images
+images_dir = Path(__file__).parent / "images"
+if images_dir.exists():
+    app.mount("/images", StaticFiles(directory=str(images_dir)), name="images")
 
 # In-memory session store
 sessions: dict[str, dict] = {}
@@ -190,8 +198,17 @@ async def order_test(req: OrderTestRequest):
     )
     session["messages"].append(order_msg.model_dump())
 
-    # Get test result from LLM
-    result = get_test_result(session["case"], test_name)
+    # Get test result from LLM (now returns tuple with images)
+    result, image_paths = get_test_result(session["case"], test_name)
+    
+    # Convert image paths to URLs accessible by frontend
+    image_urls = []
+    if image_paths:
+        for img_path in image_paths:
+            # Convert backend/images/filename.png to /images/filename.png
+            filename = Path(img_path).name
+            image_urls.append(f"/images/{filename}")
+    
     result_msg = ChatMessage(
         role="test_result",
         content=f"**{test_name}** (Cost: ${cost:.2f})\n\n{result}",
@@ -205,7 +222,8 @@ async def order_test(req: OrderTestRequest):
         "result_message": result_msg.model_dump(),
         "test_cost": cost,
         "total_cost": session["total_cost"],
-        "tests_ordered": session["tests_ordered"]
+        "tests_ordered": session["tests_ordered"],
+        "images": image_urls  # Add images to response
     }
 
 

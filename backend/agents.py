@@ -3,10 +3,13 @@ LLM Agents for the ILD Diagnostic Trainer.
 - PatientAgent: Simulates the patient responding to doctor questions
 - HintAgent: Provides next-best-step hints
 - JudgeAgent: Evaluates the doctor's overall diagnostic performance
+- VisionAgent: Analyzes HRCT images using GPT-4 Vision
 """
 
 import os
 import json
+import base64
+from pathlib import Path
 from openai import OpenAI
 
 _client = None
@@ -119,15 +122,145 @@ Rules:
 5. Do NOT reveal whether the result is real or synthetic."""
 
 
-def get_test_result(case: dict, test_name: str) -> str:
-    """Return test results - real from case data or synthetic if not available."""
+def get_test_result(case: dict, test_name: str) -> tuple[str, list[str]]:
+    """Return test results - vision analysis for HRCT with images, or text from case data.
+    
+    Returns:
+        tuple: (result_text, image_paths) where image_paths is empty list if no images
+    """
+    # Check if this is an HRCT test and if images are available
+    test_lower = test_name.lower()
+    is_hrct = "hrct" in test_lower or "high resolution ct" in test_lower or "high-resolution ct" in test_lower
+    
+    hrct_images = case["full_case_details"].get("hrct_images", [])
+    
+    print(f"DEBUG: Test name: {test_name}")
+    print(f"DEBUG: Is HRCT: {is_hrct}")
+    print(f"DEBUG: HRCT images found: {hrct_images}")
+    
+    # Use vision analysis if HRCT test and images available
+    if is_hrct and hrct_images:
+        print(f"DEBUG: Attempting vision analysis with {len(hrct_images)} images")
+        vision_result = analyze_hrct_images(hrct_images, case["ground_truth_diagnosis"])
+        if vision_result:
+            print(f"DEBUG: Vision analysis successful, returning {len(hrct_images)} images")
+            return vision_result, hrct_images
+        else:
+            print("DEBUG: Vision analysis returned None, falling back to text")
+    
+    # Fall back to text-based results
+    print("DEBUG: Using text-based results")
     test_results = json.dumps(case["full_case_details"]["test_results"], indent=2)
     system = TEST_RESULT_PROMPT.format(
         test_results=test_results,
         diagnosis=case["ground_truth_diagnosis"]
     )
     messages = [{"role": "user", "content": f"The doctor has ordered: {test_name}. Provide the result."}]
-    return _chat(system, messages, temperature=0.2)
+    return _chat(system, messages, temperature=0.2), []
+
+
+# ---------------------------------------------------------------------------
+# VISION-BASED HRCT ANALYSIS AGENT
+# ---------------------------------------------------------------------------
+
+HRCT_VISION_PROMPT = """You are an expert radiologist analyzing HRCT chest images for interstitial lung disease (ILD) diagnosis.
+
+Analyze the provided HRCT images and provide a detailed radiological report following standard clinical format.
+
+CRITICAL INSTRUCTIONS:
+1. Describe what you observe in the images objectively
+2. Note the distribution (upper/mid/lower zones, peripheral/central, bilateral/unilateral)
+3. Identify key patterns: reticular opacities, ground-glass opacities, honeycombing, traction bronchiectasis, nodules, consolidation, air trapping, mosaic attenuation
+4. Comment on pleural changes, lymphadenopathy, and other relevant findings
+5. Suggest the most likely radiological pattern (UIP, NSIP, OP, HP, etc.) based on imaging
+6. DO NOT provide a definitive diagnosis - only describe imaging findings and patterns
+7. Use standard radiological terminology
+8. Format as a clinical radiology report
+
+Provide your analysis in this format:
+
+TECHNIQUE: High-resolution CT chest
+
+FINDINGS:
+[Detailed description of findings organized by anatomical distribution]
+
+IMPRESSION:
+[Summary of key findings and radiological pattern]"""
+
+
+def encode_image_to_base64(image_path: str) -> str:
+    """Encode an image file to base64 string."""
+    with open(image_path, "rb") as image_file:
+        return base64.b64encode(image_file.read()).decode('utf-8')
+
+
+def analyze_hrct_images(image_paths: list[str], case_diagnosis: str = None) -> str:
+    """Analyze HRCT images using GPT-4 Vision."""
+    if not image_paths:
+        print("DEBUG Vision: No image paths provided")
+        return None
+    
+    print(f"DEBUG Vision: Starting analysis with {len(image_paths)} image paths")
+    
+    # Prepare image content for the API
+    content = [
+        {
+            "type": "text",
+            "text": "Analyze these HRCT chest images and provide a detailed radiological report."
+        }
+    ]
+    
+    # Add all images
+    for image_path in image_paths:
+        try:
+            print(f"DEBUG Vision: Checking image path: {image_path}")
+            
+            # Convert relative path to absolute if needed
+            img_path = Path(image_path)
+            if not img_path.is_absolute():
+                # Try relative to the agents.py file location
+                img_path = Path(__file__).parent / image_path.replace("backend/", "")
+                print(f"DEBUG Vision: Converted to absolute path: {img_path}")
+            
+            # Check if file exists
+            if not img_path.exists():
+                print(f"DEBUG Vision: File does not exist: {img_path}")
+                continue
+            
+            print(f"DEBUG Vision: Encoding image: {img_path}")
+            base64_image = encode_image_to_base64(str(img_path))
+            content.append({
+                "type": "image_url",
+                "image_url": {
+                    "url": f"data:image/png;base64,{base64_image}",
+                    "detail": "high"
+                }
+            })
+            print(f"DEBUG Vision: Successfully encoded image: {image_path}")
+        except Exception as e:
+            print(f"DEBUG Vision: Error encoding image {image_path}: {e}")
+            continue
+    
+    print(f"DEBUG Vision: Content has {len(content)} items (1 text + {len(content)-1} images)")
+    
+    if len(content) == 1:  # Only text, no images loaded
+        print("DEBUG Vision: No images were successfully loaded")
+        return None
+    
+    try:
+        response = _get_client().chat.completions.create(
+            model="gpt-4o",  # Use gpt-4o for vision
+            messages=[
+                {"role": "system", "content": HRCT_VISION_PROMPT},
+                {"role": "user", "content": content}
+            ],
+            temperature=0.2,
+            max_tokens=1500,
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        print(f"Error in vision analysis: {e}")
+        return None
 
 
 # ---------------------------------------------------------------------------
